@@ -260,7 +260,6 @@ int QTabBar::insertTab( QTab * newTab, int index )
 	lstatic->insert( index, newTab );
 
     layoutTabs();
-    updateArrowButtons();
     makeVisible( tab( currentTab() ) );
 
 #ifndef QT_NO_ACCEL
@@ -282,7 +281,6 @@ void QTabBar::removeTab( QTab * t )
     l->remove( t );
     lstatic->remove( t );
     layoutTabs();
-    updateArrowButtons();
     makeVisible( tab( currentTab() ) );
     update();
 }
@@ -887,6 +885,7 @@ void QTabBar::layoutTabs()
     }
     for ( t = lstatic->first(); t; t = lstatic->next() )
 	t->r.setHeight( r.height() );
+    updateArrowButtons();
 }
 
 /*!
@@ -977,7 +976,6 @@ void QTabBar::resizeEvent( QResizeEvent * )
     d->leftB->setGeometry( width() - 2*arrowWidth, 0, arrowWidth, height() );
 #endif
     layoutTabs();
-    updateArrowButtons();
     makeVisible( tab( currentTab() ));
 }
 
