@@ -68,7 +68,7 @@ QString qws_topdir()
     return r;
 }
 
-QFontManager * qt_fontmanager=0;
+QFontManager Q_EXPORT *qt_fontmanager=0;
 
 /*!
   \class QFontManager qfontmanager_qws.h

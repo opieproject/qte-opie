@@ -84,7 +84,7 @@ class QDiskFont;
 // e.g. Truetype Times, 10 point. There's only one of these though;
 // we want to share generated glyphs
 
-class QRenderedFont {
+class Q_EXPORT QRenderedFont {
 
 public:
 

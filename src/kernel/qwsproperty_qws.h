@@ -47,7 +47,7 @@
 
 class QWSPropertyManagerData;
 
-class QWSPropertyManager
+class Q_EXPORT QWSPropertyManager
 {
 public:
     enum Mode {

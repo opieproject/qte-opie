@@ -47,8 +47,8 @@
  *
  *********************************************************************/
 #ifndef QT_NO_QWS_MULTIPROCESS
-void qws_write_command( QWSSocket *socket, int type, char *simpleData, int simpleLen, char *rawData, int rawLen );
-bool qws_read_command( QWSSocket *socket, char *&simpleData, int &simpleLen, char *&rawData, int &rawLen, int &bytesRead );
+void Q_EXPORT qws_write_command( QWSSocket *socket, int type, char *simpleData, int simpleLen, char *rawData, int rawLen );
+bool Q_EXPORT qws_read_command( QWSSocket *socket, char *&simpleData, int &simpleLen, char *&rawData, int &rawLen, int &bytesRead );
 #endif
 /*********************************************************************
  *
@@ -57,7 +57,7 @@ bool qws_read_command( QWSSocket *socket, char *&simpleData, int &simpleLen, cha
  *********************************************************************/
 
 
-struct QWSProtocolItem
+struct Q_EXPORT QWSProtocolItem
 {
     // ctor - dtor
     QWSProtocolItem( int t, int len, char *ptr ) : type( t ),

@@ -641,7 +641,7 @@ allmoc.cpp: kernel/qt.h dialogs/qcolordialog.h \
 		network/qsocket.h \
 		network/qsocketdevice.h
 	echo '#include "kernel/qt.h"' >allmoc.cpp
-	$(CXX) -E -DQT_MOC_CPP $(CXXFLAGS) $(INCPATH) >allmoc.h allmoc.cpp
+	$(CXX) -E -DQT_MOC_CPP -DQ_EXPORT="" $(CXXFLAGS) $(INCPATH) >allmoc.h allmoc.cpp
 	$(MOC) -o allmoc.cpp allmoc.h
 	perl -pi -e 's{"allmoc.h"}{"kernel/qt.h"}' allmoc.cpp
 	rm allmoc.h

@@ -41,7 +41,7 @@ class QPopupMenu;
 /*
  Implements decoration styles
 */
-class QWSDecoration
+class Q_EXPORT QWSDecoration
 {
 public:
     QWSDecoration() {}

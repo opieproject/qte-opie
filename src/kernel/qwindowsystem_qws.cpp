@@ -89,7 +89,7 @@
 
 extern void qt_setMaxWindowRect(const QRect& r);
 
-QWSServer *qwsServer=0;
+QWSServer Q_EXPORT *qwsServer=0;
 
 #define MOUSE 0
 #define KEY 1

@@ -503,6 +503,12 @@ extern bool qt_winunicode;
 #undef QT_DLL
 #endif
 
+#ifdef GCC_SUPPORTS_VISIBILITY
+#ifndef Q_EXPORT
+	#define Q_EXPORT __attribute__((visibility("default")))
+#endif
+#endif
+
 #ifndef Q_EXPORT
 #define Q_EXPORT
 #endif

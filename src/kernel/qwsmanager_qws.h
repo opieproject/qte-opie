@@ -48,7 +48,7 @@ class QMouseEvent;
 class QWSButton;
 class QWSManager;
 
-class QWSManager : public QObject
+class Q_EXPORT QWSManager : public QObject
 {
     Q_OBJECT
 

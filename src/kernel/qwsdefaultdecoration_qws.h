@@ -44,7 +44,7 @@
 
 
 
-class QWSDefaultDecoration : public QWSDecoration
+class Q_EXPORT QWSDefaultDecoration : public QWSDecoration
 {
 public:
     QWSDefaultDecoration();

@@ -70,7 +70,7 @@ static inline int fRound( int i ) {
   pos and space give the interval (relative to parentWidget topLeft.)
 */
 
-void qGeomCalc( QArray<QLayoutStruct> &chain, int start, int count, int pos,
+void Q_EXPORT qGeomCalc( QArray<QLayoutStruct> &chain, int start, int count, int pos,
 		      int space, int spacer )
 {
     typedef int fixed;

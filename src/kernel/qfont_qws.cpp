@@ -152,7 +152,7 @@ typedef QDictIterator<QFontInternal>  QFontDictIt;
 static QFontCache    *fontCache	     = 0;	// cache of loaded fonts
 static QFontDict     *fontDict	     = 0;	// dict of all loaded fonts
 
-void qws_clearLoadedFonts()
+void Q_EXPORT qws_clearLoadedFonts()
 {
     QFontDictIt it( *fontDict );
     while ( it.current() ) {

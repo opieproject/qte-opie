@@ -40,7 +40,7 @@
 
 struct QWSMouseEvent;
 
-struct QWSEvent : QWSProtocolItem {
+struct Q_EXPORT QWSEvent : QWSProtocolItem {
 
     QWSEvent( int t, int len, char *ptr ) : QWSProtocolItem(t,len,ptr) {}
 
@@ -71,7 +71,7 @@ struct QWSEvent : QWSProtocolItem {
 
 //All events must start with windowID
 
-struct QWSConnectedEvent : QWSEvent {
+struct Q_EXPORT QWSConnectedEvent : QWSEvent {
     QWSConnectedEvent()
 	: QWSEvent( QWSEvent::Connected, sizeof( simpleData ),
 		(char*)&simpleData ) {}
@@ -90,7 +90,7 @@ struct QWSConnectedEvent : QWSEvent {
     char *display;
 };
 
-struct QWSMaxWindowRectEvent : QWSEvent {
+struct Q_EXPORT QWSMaxWindowRectEvent : QWSEvent {
     QWSMaxWindowRectEvent()
 	: QWSEvent( MaxWindowRect, sizeof( simpleData ), (char*)&simpleData ) { }
     struct SimpleData {
@@ -99,7 +99,7 @@ struct QWSMaxWindowRectEvent : QWSEvent {
     } simpleData;
 };
 
-struct QWSMouseEvent : QWSEvent {
+struct Q_EXPORT QWSMouseEvent : QWSEvent {
     QWSMouseEvent()
 	: QWSEvent( QWSEvent::Mouse, sizeof( simpleData ),
 		(char*)&simpleData ) {}
@@ -110,7 +110,7 @@ struct QWSMouseEvent : QWSEvent {
     } simpleData;
 };
 
-struct QWSFocusEvent : QWSEvent {
+struct Q_EXPORT QWSFocusEvent : QWSEvent {
     QWSFocusEvent()
 	: QWSEvent( QWSEvent::Focus, sizeof( simpleData ), (char*)&simpleData )
 	{ memset((char*)&simpleData,0,sizeof(simpleData)); }
@@ -120,7 +120,7 @@ struct QWSFocusEvent : QWSEvent {
     } simpleData;
 };
 
-struct QWSKeyEvent: QWSEvent {
+struct Q_EXPORT QWSKeyEvent: QWSEvent {
     QWSKeyEvent()
 	: QWSEvent( QWSEvent::Key, sizeof( simpleData ),
 	      (char*)&simpleData )
@@ -136,7 +136,7 @@ struct QWSKeyEvent: QWSEvent {
 };
 
 
-struct QWSCreationEvent : QWSEvent {
+struct Q_EXPORT QWSCreationEvent : QWSEvent {
     QWSCreationEvent()
 	: QWSEvent( QWSEvent::Creation, sizeof( simpleData ),
 	      (char*)&simpleData ) {}
@@ -146,7 +146,7 @@ struct QWSCreationEvent : QWSEvent {
 };
 
 #ifndef QT_NO_QWS_PROPERTIES
-struct QWSPropertyNotifyEvent : QWSEvent {
+struct Q_EXPORT QWSPropertyNotifyEvent : QWSEvent {
     QWSPropertyNotifyEvent()
 	: QWSEvent( QWSEvent::PropertyNotify, sizeof( simpleData ),
 	      (char*)&simpleData ) {}
@@ -162,7 +162,7 @@ struct QWSPropertyNotifyEvent : QWSEvent {
 };
 #endif
 
-struct QWSSelectionClearEvent : QWSEvent {
+struct Q_EXPORT QWSSelectionClearEvent : QWSEvent {
     QWSSelectionClearEvent()
 	: QWSEvent( QWSEvent::SelectionClear, sizeof( simpleData ),
 	      (char*)&simpleData ) {}
@@ -171,7 +171,7 @@ struct QWSSelectionClearEvent : QWSEvent {
     } simpleData;
 };
 
-struct QWSSelectionRequestEvent : QWSEvent {
+struct Q_EXPORT QWSSelectionRequestEvent : QWSEvent {
     QWSSelectionRequestEvent()
 	: QWSEvent( QWSEvent::SelectionRequest, sizeof( simpleData ),
 	      (char*)&simpleData ) {}
@@ -184,7 +184,7 @@ struct QWSSelectionRequestEvent : QWSEvent {
     } simpleData;
 };
 
-struct QWSSelectionNotifyEvent : QWSEvent {
+struct Q_EXPORT QWSSelectionNotifyEvent : QWSEvent {
     QWSSelectionNotifyEvent()
 	: QWSEvent( QWSEvent::SelectionNotify, sizeof( simpleData ),
 	      (char*)&simpleData ) {}
@@ -198,7 +198,7 @@ struct QWSSelectionNotifyEvent : QWSEvent {
 
 //complex events:
 
-struct QWSRegionModifiedEvent : QWSEvent {
+struct Q_EXPORT QWSRegionModifiedEvent : QWSEvent {
     QWSRegionModifiedEvent()
 	: QWSEvent( QWSEvent::RegionModified, sizeof( simpleData ),
 		(char*)&simpleData )
@@ -218,7 +218,7 @@ struct QWSRegionModifiedEvent : QWSEvent {
     QRect *rectangles;
 };
 #ifndef QT_NO_QWS_PROPERTIES
-struct QWSPropertyReplyEvent : QWSEvent {
+struct Q_EXPORT QWSPropertyReplyEvent : QWSEvent {
     QWSPropertyReplyEvent()
 	: QWSEvent( QWSEvent::PropertyReply, sizeof( simpleData ),
 		(char*)&simpleData ) {}
@@ -238,7 +238,7 @@ struct QWSPropertyReplyEvent : QWSEvent {
 #endif //QT_NO_QWS_PROPERTIES
 
 #ifndef QT_NO_COP
-struct QWSQCopMessageEvent : QWSEvent {
+struct Q_EXPORT QWSQCopMessageEvent : QWSEvent {
     QWSQCopMessageEvent()
 	: QWSEvent( QWSEvent::QCopMessage, sizeof( simpleData ),
 		(char*)&simpleData )
@@ -268,7 +268,7 @@ struct QWSQCopMessageEvent : QWSEvent {
 
 #endif
 
-struct QWSWindowOperationEvent : QWSEvent {
+struct Q_EXPORT QWSWindowOperationEvent : QWSEvent {
     QWSWindowOperationEvent()
 	: QWSEvent( WindowOperation, sizeof( simpleData ), (char*)&simpleData ) { }
 
@@ -280,7 +280,7 @@ struct QWSWindowOperationEvent : QWSEvent {
 };
 
 #ifndef QT_NO_QWS_IM
-struct QWSIMEvent : QWSEvent {
+struct Q_EXPORT QWSIMEvent : QWSEvent {
     QWSIMEvent()
 	: QWSEvent( IMEvent, sizeof( simpleData ), (char*)&simpleData ) { }
 

@@ -67,7 +67,7 @@ public:
 
 struct QWSWindowData;
 
-class QWSScreenSaver
+class Q_EXPORT QWSScreenSaver
 {
 public:
     virtual ~QWSScreenSaver();
@@ -75,7 +75,7 @@ public:
     virtual bool save(int level)=0;
 };
 
-class QWSWindow
+class Q_EXPORT QWSWindow
 {
     friend class QWSServer;
 public:
@@ -169,9 +169,9 @@ class QWSMouseHandler;
 struct QWSCommandStruct;
 
 #ifndef QT_NO_QWS_MULTIPROCESS
-class QWSServer : public QWSServerSocket
+class Q_EXPORT QWSServer : public QWSServerSocket
 #else
-class QWSServer : public QObject
+class Q_EXPORT QWSServer : public QObject
 #endif
 {
     friend class QCopChannel;
@@ -501,7 +501,7 @@ extern QWSServer *qwsServer; //there can be only one
 
 
 #ifndef QT_NO_QWS_IM
-class QWSInputMethod : public QObject
+class Q_EXPORT QWSInputMethod : public QObject
 {
 public:
     QWSInputMethod();
@@ -525,7 +525,7 @@ inline void QWSInputMethod::sendIMEvent( QWSServer::IMState state, const QString
 #endif
 
 #ifndef QT_NO_QWS_FSIM
-class QWSGestureMethod : public QObject
+class Q_EXPORT QWSGestureMethod : public QObject
 {
 public:
     QWSGestureMethod();
@@ -573,7 +573,7 @@ struct QWSMouseEvent;
 
 typedef QMap<int, QWSCursor*> QWSCursorMap;
 
-class QWSClient : public QObject
+class Q_EXPORT QWSClient : public QObject
 {
     Q_OBJECT
 public:

@@ -696,7 +696,7 @@ QSize QScrollView::viewportSize( int x, int y ) const
   The surrounding environment (or application, if there is no
   environment, may set this. Requires Qt >= 2.3.8.
 */
-bool qt_left_hand_scrollbars = FALSE;
+bool Q_EXPORT qt_left_hand_scrollbars = FALSE;
 
 /*!
   Updates scrollbars - all possibilities considered.  You should never

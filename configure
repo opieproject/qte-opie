@@ -409,6 +409,9 @@ while [ -n "$1" ]; do
    -tslib)
        TSLIB=yes
 	;;
+   -visibility-hidden)
+   	VISIBILITY=YES
+	;;
    -no-g++-exceptions)
 	GPLUSPLUS_EXCEPTIONS=no
 	;;
@@ -1296,6 +1299,9 @@ each option:
     -tslib ............. Enable TSlib (touchscreen library) mouse handler.
                          See http://arm.linux.org.uk 			      
 
+    -visibility-hidden . Use -fvisibility=hidden as default. This requires GCC 4.0
+                         or a special patched GCC to support the visibility attribute
+
     -no-g++-exceptions . Disable exceptions on platforms using the GNU C++
 			 compiler by using the -fno-exceptions flag.
 
@@ -1363,6 +1369,10 @@ if [ "x$TSLIB" = "xyes" ]
 then
    QT_CXX="${QT_CXX} -DQT_QWS_TSLIB"
    QT_LIBS="${QT_LIBS} -lts"
+fi
+if [ "x$VISIBILITY=" = "xyes" ]
+then
+   QT_CXX="${QT_CXX} -DGCC_SUPPORTS_VISIBILITY -fvisibility=hidden"
 fi
 if [ "x$THREAD" = "xyes" ]
 then

@@ -42,7 +42,7 @@
 class QCopChannelPrivate;
 class QWSClient;
 
-class QCopChannel : public QObject
+class Q_EXPORT QCopChannel : public QObject
 {
     Q_OBJECT
 public:

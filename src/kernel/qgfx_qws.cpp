@@ -38,10 +38,10 @@
 #include <stdlib.h>
 
 #ifndef QT_NO_QWS_CURSOR
-bool qt_sw_cursor=false;
-QScreenCursor * qt_screencursor=0;
+bool Q_EXPORT qt_sw_cursor=false;
+QScreenCursor Q_EXPORT * qt_screencursor=0;
 #endif
-QScreen * qt_screen=0;
+QScreen Q_EXPORT * qt_screen=0;
 
 extern bool qws_screen_is_interlaced; //### hack, from qapplication_qws.cpp
 

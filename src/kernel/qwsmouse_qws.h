@@ -38,7 +38,7 @@
 #include <qpointarray.h>
 #endif // QT_H
 
-class QWSPointerCalibrationData
+class Q_EXPORT QWSPointerCalibrationData
 {
 public:
     enum Location { TopLeft = 0, BottomLeft = 1, BottomRight = 2, TopRight = 3,
@@ -47,7 +47,7 @@ public:
     QPoint screenPoints[5];
 };
 
-class QWSMouseHandler : public QObject {
+class Q_EXPORT QWSMouseHandler : public QObject {
     Q_OBJECT
 public:
     QWSMouseHandler();
