@@ -321,6 +321,15 @@ static const QWSServer::KeyMap keyM[] = {
     { 	0x20ac,	0xffff  , 0x20ac , 0x20ac }, // 73 Euro sign
     {	Qt::Key_unknown,	0xffff  , 0xffff  , 0xffff  }, // 74
     {	Qt::Key_F32,		0xffff  , 0xffff  , 0xffff  }, // 75 Sync
+    {	Qt::Key_unknown,	0xffff  , 0xffff  , 0xffff  }, // 76
+    {	Qt::Key_unknown,	0xffff  , 0xffff  , 0xffff  }, // 77
+    {	Qt::Key_unknown,	0xffff  , 0xffff  , 0xffff  }, // 78
+    {	Qt::Key_unknown,	0xffff  , 0xffff  , 0xffff  }, // 79
+    {	Qt::Key_unknown,	0xffff  , 0xffff  , 0xffff  }, // 7a
+    {	Qt::Key_Return,		0xffff  , 0xffff  , 0xffff  }, // 7b
+    {	Qt::Key_Escape,		0xffff  , 0xffff  , 0xffff  }, // 7c
+    {	Qt::Key_Up,			0xffff  , 0xffff  , 0xffff  }, // 7d
+    {	Qt::Key_Down,		0xffff  , 0xffff  , 0xffff  }, // 7e    
     {	0,			0xffff  , 0xffff  , 0xffff  }
 };
 #else
