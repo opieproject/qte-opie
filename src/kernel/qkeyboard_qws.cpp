@@ -793,6 +793,9 @@ void QWSPC101KeyboardHandler::doKey(uchar code)
     bool release = false;
     int keypad = 0;
 
+#if defined(QT_QWS_IPAQ) || defined(QT_QWS_SL5XXX) // need autorepeat implemented here?
+        bool repeatable = TRUE;
+
 #ifndef QT_QWS_USE_KEYCODES
 #if defined(QT_QWS_IPAQ)
     // map ipaq 'action' key (0x60, 0xe0)
@@ -929,9 +932,6 @@ void QWSPC101KeyboardHandler::doKey(uchar code)
 	if ( currentKey )
 	    keyCode = currentKey->key_code;
 
-#if defined(QT_QWS_IPAQ) || defined(QT_QWS_SL5XXX) // need autorepeat implemented here?
-	bool repeatable = TRUE;
-
 #if defined(QT_QWS_IPAQ)
 	switch (code) {
 #if defined(QT_QWS_SL5XXX)
@@ -1006,25 +1006,23 @@ void QWSPC101KeyboardHandler::doKey(uchar code)
 	    repeatable = FALSE;
 #endif
 
+#if defined(QT_QWS_IPAQ) || defined(QT_QWS_SL5XXX)
 	if ( qt_screen->isTransformed()
 	     && keyCode >= Qt::Key_Left && keyCode <= Qt::Key_Down )
 	    {
 		keyCode = xform_dirkey(keyCode);
 	    }
-
-#ifdef QT_QWS_AUTOREPEAT_MANUALLY
-	if ( repeatable && !release )
-	    rep->start(prevuni,prevkey,modifiers);
-	else
-	    rep->stop();
 #endif
+	
 #endif
 	/*
 	  Translate shift+Key_Tab to Key_Backtab
 	*/
 	if (( keyCode == Key_Tab ) && shift )
 	    keyCode = Key_Backtab;
+#if defined(QT_QWS_IPAQ) || defined(QT_QWS_SL5XXX)
     }
+#endif
 
 #ifndef QT_QWS_USE_KEYCODES
     /*
@@ -1179,6 +1177,14 @@ void QWSPC101KeyboardHandler::doKey(uchar code)
 	} else {
 	    prevkey = prevuni = 0;
 	}
+
+#ifdef QT_QWS_AUTOREPEAT_MANUALLY
+        if ( repeatable && !release )
+            rep->start(prevuni,prevkey,modifiers);
+        else
+            rep->stop();
+#endif
+
     }
 #ifndef QT_QWS_USE_KEYCODES
     extended = 0;
