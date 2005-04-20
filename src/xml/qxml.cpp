@@ -809,6 +809,9 @@ void QXmlInputSource::setData( const QString& dat )
 // ### The input source should not do the encoding detection!
 void QXmlInputSource::readInput( QByteArray& rawData )
 {
+    // avoid crash if the array has less than 5 characters (skyhusker@handhelds.org)
+    if ( rawData.size() < 6 )
+        return;
     QBuffer buf( rawData );
     buf.open( IO_ReadOnly );
     QTextStream *stream = new QTextStream( &buf );
