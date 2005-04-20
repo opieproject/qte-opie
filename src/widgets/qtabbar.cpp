@@ -412,8 +412,8 @@ void QTabBar::paint( QPainter * p, QTab * t, bool selected ) const
     int iw = 0;
     int ih = 0;
     if ( t->iconset != 0 ) {
-	iw = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).width();
-	ih = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).height();
+	iw = t->iconset->pixmap().width();
+	ih = t->iconset->pixmap().height();
 	if (!t->label.isEmpty())
 	   iw +=2; 
     }
@@ -440,7 +440,11 @@ void QTabBar::paintLabel( QPainter* p, const QRect& br,
 	    ? QIconSet::Normal : QIconSet::Disabled;
 	if ( mode == QIconSet::Normal && has_focus )
 	    mode = QIconSet::Active;
-	QPixmap pixmap = t->iconset->pixmap( QIconSet::Small, mode );
+	QPixmap pixmap;
+	if ( mode == QIconSet::Disabled )
+		pixmap = t->iconset->pixmap( QIconSet::Automatic, QIconSet::Disabled );
+	else
+		pixmap = t->iconset->pixmap();
 	int pixw = pixmap.width();
 	int pixh = pixmap.height();
 	r.setLeft( r.left() + pixw + 2 );
@@ -869,8 +873,8 @@ void QTabBar::layoutTabs()
 	int iw = 0;
 	int ih = 0;
 	if ( t->iconset != 0 ) {
-	    iw = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).width();
-	    ih = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).height();
+	    iw = t->iconset->pixmap().width();
+	    ih = t->iconset->pixmap().height();
 	    if (!t->label.isNull())
 		iw +=2;
 	}
@@ -914,8 +918,8 @@ void QTabBar::focusInEvent( QFocusEvent * )
 	    int iw = 0;
 	    int ih = 0;
 	    if ( t->iconset != 0 ) {
-		iw = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).width();
-		ih = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).height();
+		iw = t->iconset->pixmap().width();
+		ih = t->iconset->pixmap().height();
 		if (!t->label.isEmpty())
 		    iw +=2; 
 	    }
@@ -946,8 +950,8 @@ void QTabBar::focusOutEvent( QFocusEvent * )
 	    int iw = 0;
 	    int ih = 0;
 	    if ( t->iconset != 0 ) {
-		iw = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).width();
-		ih = t->iconset->pixmap( QIconSet::Small, QIconSet::Normal ).height();
+		iw = t->iconset->pixmap().width();
+		ih = t->iconset->pixmap().height();
 		if (!t->label.isEmpty())
 		    iw +=2; 
 	    }
