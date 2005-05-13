@@ -182,6 +182,7 @@ kernel:HEADERS += $$KERNEL_H/qabstractlayout.h \
 		  $$KERNEL_H/qasyncimageio.h \
 		  $$KERNEL_H/qasyncio.h \
 		  $$KERNEL_H/qbitmap.h \
+		  $$KERNEL_H/qbidi.h \
 		  $$KERNEL_H/qbrush.h \
 		  $$KERNEL_H/qclipboard.h \
 		  $$KERNEL_H/qcolor.h \
@@ -527,6 +528,8 @@ kernel:SOURCES += kernel/qabstractlayout.cpp \
 		  kernel/qapplication.cpp \
 		  kernel/qasyncimageio.cpp \
 		  kernel/qasyncio.cpp \
+		  kernel/qbidi.cpp \
+		  kernel/minibidi.cpp \
 		  kernel/qbitmap.cpp \
 		  kernel/qclipboard.cpp \
 		  kernel/qcolor.cpp \

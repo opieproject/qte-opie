@@ -168,6 +168,8 @@ OBJECTS_kernel = 3rdparty/kernel/qregion_qws.o \
 		kernel/qabstractlayout.o \
 		kernel/qaccel.o \
 		kernel/qapplication.o \
+		kernel/qbidi.o        \
+		kernel/minibidi.o     \
 		kernel/qasyncimageio.o \
 		kernel/qasyncio.o \
 		kernel/qbitmap.o \
@@ -4106,6 +4108,12 @@ kernel/qapplication.o: kernel/qapplication.cpp \
 		kernel/qclipboard.h \
 		kernel/qthread.h \
 		tools/qvaluestack.h
+
+kernel/qbidi.o: kernel/qbidi.cpp \
+		kernel/qbidi.h   \
+		tools/qstring.h
+
+kernel/minibidi.o: kernel/minibidi.c
 
 kernel/qasyncimageio.o: kernel/qasyncimageio.cpp \
 		kernel/qasyncimageio.h \

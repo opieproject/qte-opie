@@ -51,6 +51,11 @@
 #include <fcntl.h>
 #include <errno.h>
 
+//HAQ bidi patch
+#ifdef USE_BIDI
+#include "qbidi.h"
+#endif
+// end HAQ patch
 
 extern bool qws_sw_cursor;
 
@@ -1382,6 +1387,53 @@ void QGfxRasterBase::drawText(int x,int y,const QString & s)
 	setAlphaType(BigEndianMask);
     }
 
+#ifdef USE_BIDI
+    // HAQ do bidi
+    QString  n;
+    qApplyBidi(s, n);
+
+    for( loopc=0; loopc < int(n.length()); loopc++ ) {
+	QGlyph glyph = memorymanager->lockGlyph(myfont, n[loopc]);
+	int myw=glyph.metrics->width;
+	srcwidth = myw;
+	srcheight = glyph.metrics->height;
+	setAlphaSource(glyph.data,glyph.metrics->linestep);
+	int myx=x;
+	int myy=y;
+	myx+=glyph.metrics->bearingx;
+	myy-=glyph.metrics->bearingy;
+
+	// HAQ hack to show arabic tashkeel (diacriticals) above 
+	// the previous character (which in reversed arabic, as it is here, is the next character)
+
+	QChar c = n[loopc];
+	if (ISTASHKEEL(c.unicode())) {
+		//printf("glyph %d bearingx %d width %d advance %d\n",
+		//	c.unicode(),glyph.metrics->bearingx, glyph.metrics->width, glyph.metrics->advance);
+
+		if (loopc < int(n.length()-1)) // if there is a following character then place this glyph over it
+		 {
+			QGlyph nextGlyph = memorymanager->lockGlyph(myfont, n[loopc+1]);
+			int nextCharWidth = nextGlyph.metrics->width;
+			myx += nextCharWidth/2 - glyph.metrics->width;
+			// pre-undo the advance in x so that the next glyph is placed over this one
+			x -= glyph.metrics->advance;
+		}
+	}
+
+	if(glyph.metrics->width<1 || glyph.metrics->height<1
+	    || glyph.metrics->linestep==0)
+	{
+	    // non-printing characters
+	} else {
+	    blt(myx,myy,myw,glyph.metrics->height,0,0);
+	}
+	x+=glyph.metrics->advance;
+	// ... unlock glyph
+    }
+
+#else
+
     for( loopc=0; loopc < int(s.length()); loopc++ ) {
 	QGlyph glyph = memorymanager->lockGlyph(myfont, s[loopc]);
 	int myw=glyph.metrics->width;
@@ -1402,6 +1454,9 @@ void QGfxRasterBase::drawText(int x,int y,const QString & s)
 	x+=glyph.metrics->advance;
 	// ... unlock glyph
     }
+
+#endif
+
 #ifdef DEBUG_LOCKS
     qDebug("unaccelerated drawText unlock");
 #endif

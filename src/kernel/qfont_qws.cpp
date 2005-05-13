@@ -49,6 +49,12 @@
 #include "qfontmanager_qws.h"
 #include "qmemorymanager_qws.h"
 
+//HAQ
+#ifdef USE_BIDI
+#include "qbidi.h"
+#endif
+// end HAQ
+
 // QFont_Private accesses QFont protected functions
 
 class QFont_Private : public QFont
@@ -385,17 +391,46 @@ int QFontMetrics::lineSpacing() const
 
 int QFontMetrics::width( QChar ch ) const
 {
+#ifdef USE_BIDI  
+
+    int advance;
+    if (ISTASHKEEL(ch.unicode())) {
+      advance = 0;
+    }
+    else
+      advance = memorymanager->lockGlyphMetrics(((QFontMetrics*)this)->internal()->handle(),ch)->advance;
+    return advance;
+
+#else
+
     return memorymanager->lockGlyphMetrics(((QFontMetrics*)this)->internal()->handle(),ch)->advance;
+
+#endif
 }
 
 int QFontMetrics::width( const QString &str, int len ) const
 {
+#ifdef USE_BIDI
+
+    QString n;
+    qApplyBidi(str, n);
+    if (len < 0) len = n.length();
+    int ret=0;
+    for (int i=0; i<len; i++)
+      ret += width(n[i]);
+    return ret;
+
+#else
+
     if ( len < 0 )
 	len = str.length();
     int ret=0;
     for (int i=0; i<len; i++)
 	ret += width(str[i]);
     return ret;
+
+#endif
+
 }
 
 QRect QFontMetrics::boundingRect( const QString &str, int len ) const
