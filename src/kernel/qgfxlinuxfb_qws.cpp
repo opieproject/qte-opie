@@ -610,6 +610,11 @@ uchar * QLinuxFbScreen::cache(int amount, int optim)
 
     // No free blocks in already-taken memory; get some more
     // if we can
+    if ( amount >= (*lowest ) ) {
+	//Avoid this overflow
+	qt_fbdpy->ungrab();
+	return 0;
+    }
     unsigned int newlowest = (*lowest)-amount;
     if (newlowest % align) {
        	newlowest -= align;
