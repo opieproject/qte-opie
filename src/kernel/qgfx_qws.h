@@ -191,6 +191,7 @@ public:
     virtual int pixmapOffsetAlignment() { return 64; }
     virtual int pixmapLinestepAlignment() { return 64; }
 
+    virtual void sync() {}
     virtual bool onCard(unsigned char *) const;
     virtual bool onCard(unsigned char *, ulong& out_offset) const;
 
