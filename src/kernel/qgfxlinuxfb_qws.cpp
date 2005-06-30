@@ -791,11 +791,6 @@ void QLinuxFbScreen::setMode(int nw,int nh,int nd)
     fb_fix_screeninfo finfo;
     fb_var_screeninfo vinfo;
 
-    if (ioctl(fd, FBIOGET_FSCREENINFO, &finfo)) {
-	perror("reading /dev/fb0");
-	qFatal("Error reading fixed information");
-    }
-
     if (ioctl(fd, FBIOGET_VSCREENINFO, &vinfo)) {
 	qFatal("Error reading variable information in mode change");
     }
@@ -810,6 +805,10 @@ void QLinuxFbScreen::setMode(int nw,int nh,int nd)
 
     if (ioctl(fd, FBIOGET_VSCREENINFO, &vinfo)) {
 	qFatal("Error reading changed variable information in mode change");
+    }
+
+    if (ioctl(fd, FBIOGET_FSCREENINFO, &finfo)) {
+	qFatal("Error reading changed fixed information in mode change");
     }
 
     w=vinfo.xres;
