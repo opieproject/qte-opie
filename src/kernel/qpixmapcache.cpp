@@ -519,7 +519,7 @@ QSharedMemoryManager::QSharedMemoryManager()
 #endif // DEBUG_SHARED_MEMORY_CACHE
     }
 
-    if ( shmId == -1 || (int)shm == -1 )
+    if ( shmId == -1 || (long)shm == -1 )
 	qFatal("Cannot attach to shared memory");
 
     qt_sharedMemoryData = shm->data;
@@ -536,8 +536,8 @@ QSharedMemoryManager::QSharedMemoryManager()
 	shm->tail.setFree(false);
 	shm->tail.setNextFree(QSMemPtr());
 #ifdef THROW_AWAY_UNUSED_PAGES
-	int freePageStart = PAGE_ALIGN((int)&shm->first + sizeof(QSMemNode));
-	int freePagesLength = PAGE_ALIGN((int)&shm->tail) - freePageStart;
+	int freePageStart = PAGE_ALIGN((long)&shm->first + sizeof(QSMemNode));
+	int freePagesLength = PAGE_ALIGN((long)&shm->tail) - freePageStart;
 	if ( freePagesLength ) {
 # ifdef DEBUG_SHARED_MEMORY_CACHE
 	    qDebug("Initially marking free pages as not needed");
@@ -770,8 +770,8 @@ void QSharedMemoryManager::internal_free(QSMemPtr ptr)
     node = newFreeNode->next();
 
 #ifdef THROW_AWAY_UNUSED_PAGES
-    int freePageStart = PAGE_ALIGN((int)newFreeNode+sizeof(QSMemNode));
-    int freePagesLength = PAGE_ALIGN((int)node) - freePageStart;
+    int freePageStart = PAGE_ALIGN((long)newFreeNode+sizeof(QSMemNode));
+    int freePagesLength = PAGE_ALIGN((long)node) - freePageStart;
     if ( freePagesLength ) {
 #ifdef DEBUG_SHARED_MEMORY_CACHE
 	qDebug("Marking pages not needed");
