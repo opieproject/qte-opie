@@ -51,8 +51,6 @@
 #include <sys/ioctl.h>
 #include <sys/soundcard.h>
 
-extern int errno;
-
 #define QT_QWS_SOUND_16BIT 1 // or 0, or undefined for always 0
 #define QT_QWS_SOUND_STEREO 1 // or 0, or undefined for always 0
 
