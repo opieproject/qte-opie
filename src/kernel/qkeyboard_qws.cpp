@@ -963,6 +963,16 @@ void QWSPC101KeyboardHandler::doKey(uchar code)
 	    repeatable = FALSE;
 	    break;
 #endif
+
+	case 0x74: // kernel KEY_POWER
+	    keyCode = Key_F34;
+	    repeatable = FALSE;
+	    break;
+	case 89: // kernel KEY_RO
+	    keyCode = Key_F24;
+	    repeatable = FALSE;
+	    break;
+
 	case 0x78:
 # if defined(QT_QWS_IPAQ)
 	    keyCode = Key_F24;  // record
