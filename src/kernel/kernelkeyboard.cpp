@@ -627,8 +627,10 @@ void QWSTtyKeyboardHandler::handleKey(unsigned int code, bool release)
     case Qt::Key_Down:
         unicode = 0xffff;
         mod_key = false;
+#if 0
         if (qt_screen->isTransformed())
             qtKeyCode = static_cast<Qt::Key>( xform_dirkey(static_cast<int>( qtKeyCode ) ) );
+#endif
         break;
     /*
      * handle lock, we don't handle scroll lock!
