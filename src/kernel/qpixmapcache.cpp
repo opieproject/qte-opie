@@ -119,13 +119,13 @@ void cleanup_pixmap_cache();
 #include <time.h>
 #include <stdio.h>
 #include <signal.h>
+#include <unistd.h>
 
 #ifdef THROW_AWAY_UNUSED_PAGES
 # include <sys/mman.h> // madvise
-# include <asm/page.h> // PAGE_SIZE,PAGE_MASK,PAGE_ALIGN
-# ifndef PAGE_ALIGN
+# define PAGE_SIZE		getpagesize()
+# define PAGE_MASK		(~(PAGE_SIZE-1))
 # define PAGE_ALIGN(addr)	(((addr)+PAGE_SIZE-1)&PAGE_MASK)
-# endif // PAGE_ALIGN
 #endif // THROW_AWAY_UNUSED_PAGES 
 
 
