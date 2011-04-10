@@ -134,6 +134,10 @@ bool QLinuxFbScreen::connect( const QString &displaySpec )
     }
 
     d=vinfo.bits_per_pixel;
+    // 18-bpp-support
+    if ((d == 18) || (d == 19))
+       d = 24;
+    // End of 18-bpp-support
     lstep=finfo.line_length;
     int xoff = vinfo.xoffset;
     int yoff = vinfo.yoffset;
@@ -427,6 +431,15 @@ bool QLinuxFbScreen::initDevice()
 		gbits=6;
 		bbits=5;
 		break;
+	  // 18-bpp-support
+	  case 18: case 19:
+		rbits=6;
+		gbits=6;
+		bbits=6;
+		vinfo.bits_per_pixel=24;
+		startupd=24;
+		break;
+	  // End of 18-bpp-support
 	  case 24: case 32:
 		rbits=gbits=bbits=8;
 		break;
@@ -819,6 +832,10 @@ void QLinuxFbScreen::setMode(int nw,int nh,int nd)
     w=vinfo.xres;
     h=vinfo.yres;
     d=vinfo.bits_per_pixel;
+    // 18-bpp-support
+    if ((d == 18) || (d == 19))
+       d = 24;
+    // End of 18-bpp-support
     lstep=finfo.line_length;
     size=h*lstep;
 }

@@ -166,25 +166,51 @@ struct SWCursorData {
 #endif
 
 #define MASK4BPP(x) (0xf0 >> (x))
-
+// 18-bpp-support
 inline void gfxSetRgb24( unsigned char *d, unsigned int p )
 {
-    *d = p & 0x0000ff;
+#ifdef QT_NO_QWS_DEPTH_18 
+    *d = p & 0x000ff;
     *(d+1) = (p & 0x00ff00 ) >> 8;
     *(d+2) = (p & 0xff0000 ) >> 16;
+#else
+    uint b = (p & 0x0000ff) >>  0;
+    uint g = (p & 0x00ff00) >>  8;
+    uint r = (p & 0xff0000) >> 16;
+    uint data = (b>>2) | ((g>>2) << 6) | ((r>>2) << 12);
+    *d = data & 0xff;
+    *(d+1) = (data >> 8) & 0xff;
+    *(d+2) = (data >> 16) & 0xff;
+#endif
 }
 
 inline void gfxSetRgb24( unsigned char *d, int r, int g, int b )
 {
+#ifdef QT_NO_QWS_DEPTH_18 
     *d = b;
     *(d+1) = g;
     *(d+2) = r;
+#else
+    uint data = (b>>2) | ((g>>2) << 6) | ((r>>2) << 12);
+    *d = data & 0xff;
+    *(d+1) = (data >> 8) & 0xff;
+    *(d+2) = (data >> 16) & 0xff;
+#endif
 }
 
 inline unsigned int gfxGetRgb24( unsigned char *d )
 {
+#ifdef QT_NO_QWS_DEPTH_18 
     return *d | (*(d+1)<<8) | (*(d+2)<<16);
+#else
+    uint data = *d | (*(d+1)<<8) | (*(d+2)<<16);
+    uint r = ((data >> 10) & 0xfc);
+    uint g = ((data >>  4) & 0xfc);
+    uint b = ((data <<  2) & 0xfc);
+    return b | (g << 8) | (r << 16);
+#endif
 }
+// End of 18-bpp-support
 
 static bool simple_8bpp_alloc=FALSE;
 
@@ -1822,11 +1848,12 @@ GFX_INLINE unsigned int QGfxRasterBase::get_value_32(
 	} else {
 	    (*srcdata)+=4;
 	}
-#if !defined( QT_NO_QWS_DEPTH_24 )
+// 18-bpp hack (mlk)
+//#if !defined( QT_NO_QWS_DEPTH_24 )
     } else if(sdepth==24) {
 	ret = gfxGetRgb24( *srcdata );
 	(*srcdata) += 3;
-#endif
+//#endif
 #if !defined( QT_NO_IMAGE_16_BIT ) || !defined( QT_NO_QWS_DEPTH_16 )
     } else if(sdepth==16) {
 	unsigned short int hold=*((unsigned short int *)(*srcdata));
@@ -4018,9 +4045,22 @@ GFX_INLINE void QGfxRaster<depth,type>::hAlphaLineUnclipped( int x1,int x2,
 	unsigned char *alphaptr = (unsigned char *)alphabuf;
 	unsigned char *avp = alphas;
 	int loopc;
-
+// 18-bpp-support 
+#ifdef QT_NO_QWS_DEPTH_18
 	memcpy( alphabuf, myptr+x1*3, w*3 );
-
+#else
+	{ uchar *srcptr24 = myptr+x1*3;
+	uchar *dstptr24 = (uchar*)alphabuf;
+	for ( int i = 0; i < w; i++ ) {
+	    uint pix = gfxGetRgb24(srcptr24);
+	    dstptr24[2] = (pix >> 16) & 0xff;
+	    dstptr24[1] = (pix >>  8) & 0xff;
+	    dstptr24[0] = (pix >>  0) & 0xff;
+	    srcptr24 += 3;
+	    dstptr24 += 3;
+	} }
+#endif
+// End of 18-bpp-support
 	// Now blend with source data
 	unsigned char * srcptr=srcdata;
 	unsigned int srcval;
@@ -5864,10 +5904,10 @@ QGfx * QScreen::createGfx(unsigned char * bytes,int w,int h,int d, int linestep)
     } else if(d==8) {
 	ret = new QGfxRaster<8,0>(bytes,w,h);
 #endif
-#ifndef QT_NO_QWS_DEPTH_24
+//#ifndef QT_NO_QWS_DEPTH_24
     } else if(d==24) {
 	ret = new QGfxRaster<24,0>(bytes,w,h);
-#endif
+//#endif
 #ifndef QT_NO_QWS_DEPTH_32
     } else if(d==32) {
 	ret = new QGfxRaster<32,0>(bytes,w,h);

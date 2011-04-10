@@ -808,7 +808,8 @@ then
     echo "   4. 4bpp grayscale - also enables 8bpp"
     echo "   8. 8bpp"
     echo "  16. 16bpp"
-    echo "  24. 24bpp - also enables 32bpp"
+    echo "  18. 18bpp - packed into 24bpp, cannot be enabled with 24bpp"
+    echo "  24. 24bpp - also enables 32bpp, cannot be enabled with 18bpp"
     echo "  32. 32bpp"
     echo
     echo "Each depth adds around 100Kb on 80386."
@@ -833,7 +834,7 @@ fi
 
 if [ -n "$DEPTHS" ]
 then
-    DV=;D4=;D8=;D16=;D24=;D32=
+    DV=;D4=;D8=;D16=;D18=;D24=;D32=
     for D in `echo "$DEPTHS" | sed -e 's/,/ /g'`
     do
 	case "$D" in
@@ -841,10 +842,20 @@ then
 	;;  4) D4=y; D8=y
 	;;  8) D8=y
 	;; 16) D16=y
+            ;; 18) D18=y
 	;; 24) D24=y; D32=y
 	;; 32) D32=y
 	esac
     done
+
+    if [ ! -z "$D18" -a ! -z "$D24" ]
+    then
+        echo
+        echo "WARNING: You have configured with depth 18 and 24."
+        echo "         These depths are not compatible. Depth 24"
+        echo "         will be disabled."
+    fi
+
     if [ -z "$DV" ]
     then
 	QT_CXX="$QT_CXX -DQT_NO_QWS_VGA_16"
@@ -861,9 +872,19 @@ then
     then
 	QT_CXX="$QT_CXX -DQT_NO_QWS_DEPTH_16"
     fi
+    if [ -z "$D18" ]
+    then
+        QT_CXX="$QT_CXX -DQT_NO_QWS_DEPTH_18"
+    fi
     if [ -z "$D24" ]
     then
 	QT_CXX="$QT_CXX -DQT_NO_QWS_DEPTH_24"
+    else
+        # Disable depth 24 if depth 18 enabled
+        if [ ! -z "$D18" ]
+        then
+            QT_CXX="$QT_CXX -DQT_NO_QWS_DEPTH_24"
+        fi
     fi
     if [ -z "$D32" ]
     then
@@ -1332,7 +1353,7 @@ Qt/Embedded only:
 			 default ($QCONFIG).
 
     -depths list ....... Comma-separated list of supported bit-per-pixel
-			 depths, from:  v, 4, 8, 16, 24, and 32.  'v' is VGA16.
+			 depths, from:  v, 4, 8, 16, 18, 24, and 32.  'v' is VGA16.
 
     -accel-snap ........ Enable SciTech SNAP Graphics acceleration.
     -accel-voodoo3 ..... Enable Voodoo3 acceleration.

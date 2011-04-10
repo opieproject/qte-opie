@@ -1020,10 +1020,10 @@ QGfx *QTransformedScreen::createGfx(unsigned char * bytes,int w,int h,int d, int
     } else if (d==8) {
 	ret = new QGfxTransformedRaster<8,0>(bytes,w,h);
 #endif
-#ifndef QT_NO_QWS_DEPTH_24
+//#ifndef QT_NO_QWS_DEPTH_24
     } else if (d==24) {
 	ret = new QGfxTransformedRaster<24,0>(bytes,w,h);
-#endif
+//#endif
 #ifndef QT_NO_QWS_DEPTH_32
     } else if (d==32) {
 	ret = new QGfxTransformedRaster<32,0>(bytes,w,h);

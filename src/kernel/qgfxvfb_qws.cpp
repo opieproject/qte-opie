@@ -288,10 +288,14 @@ bool QVFbScreen::connect( const QString & )
     d = hdr->depth;
     lstep = hdr->linestep;
 
-#ifdef DEBUG
+//#ifdef DEBUG
     qDebug( "Connected to VFB server: %d x %d x %d", w, h, d );
-#endif
+//#endif
 
+// 18-bpp-support
+    if ( (d == 18) || (d == 19) )
+	d = 24;
+// End of 18-bpp-support
     size = lstep * h;
     mapsize = size;
     screencols = hdr->numcols;
@@ -434,6 +438,15 @@ QGfx * QVFbScreen::createGfx(unsigned char * bytes,int w,int h,int d, int linest
 	else
 	    ret = new QGfxRaster<32,0>(bytes,w,h);
 #endif
+// 18-bpp-support
+//#ifndef QT_NO_QWS_DEPTH_24
+    } else if (d==24) {
+	if ( bytes == qt_screen->base() )
+	    ret = new QGfxVFb<24,0>(bytes,w,h);
+	else
+	    ret = new QGfxRaster<24,0>(bytes,w,h);
+//#endif
+// 18-bpp-support
     } else {
 	qFatal("Can't drive depth %d",d);
     }
