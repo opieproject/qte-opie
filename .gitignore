@@ -1,0 +1,10 @@
+*.moc
+moc_*
+*.o
+.obj/
+*~
+Makefile
+stamp-headers
+.directory
+lib/*.so*
+bin/
