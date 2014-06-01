@@ -1478,6 +1478,10 @@ chmod -w src/tools/qmodules.h
 
 # include math lib for compilers that don't automatically include it
 QT_LIBS="${QT_LIBS} -lm"
+
+# include alsa for sound
+QT_LIBS="${QT_LIBS} -lasound"
+
 [ "x$LIBPNG" = "xno" ] && [ ! "x$REALLY_DONT_USE_LIBPNG" = "xyes" ] && QT_LIBS="${QT_LIBS} -lpng"
 [ "x$ZLIB" = "xno" ] && [ ! "x$REALLY_DONT_USE_LIBZ" = "xyes" ] && QT_LIBS="${QT_LIBS} -lz"
 [ "x$JPEG" = "xyes" ] && QT_LIBS="${QT_LIBS} -ljpeg"
