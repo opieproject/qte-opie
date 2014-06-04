@@ -251,9 +251,9 @@ memory manager.
 
 bool QLinuxFbScreen::initDevice()
 {
-    // No blankin' screen, no blinkin' cursor!, no cursor!
+    /* Setting up the VT parameters is done in qapplication_qws.cpp
     const char termctl[]="\033[9;0]\033[?33l\033[?25l";
-    writeTerm(termctl,sizeof(termctl));
+    writeTerm(termctl,sizeof(termctl)); */
 
     // Grab current mode so we can reset it
     fb_var_screeninfo vinfo;

@@ -1247,6 +1247,24 @@ QWSTtyKeyboardHandler::~QWSTtyKeyboardHandler()
 {
     if (kbdFD >= 0)
     {
+
+#if !defined(_OS_FREEBSD_) && !defined(_OS_SOLARIS_)
+        struct vt_mode vtMode;
+        ioctl(kbdFD, VT_GETMODE, &vtMode);
+
+        /* Mickey says: "Better give up control of VT switching.
+         *               Hey, I really hate that OS-will-reacquire-resources on process-death
+         *               kind of thinking!
+         */
+        vtMode.mode = VT_AUTO;
+        vtMode.relsig = 0;
+        vtMode.acqsig = 0;
+        ioctl(kbdFD, VT_SETMODE, &vtMode);
+
+        signal(VTSWITCHSIG, 0);
+        qDebug( "~QWSTtyKeyboardHandler() - released VT." );
+#endif
+
 #if !defined(_OS_FREEBSD_) && !defined(_OS_SOLARIS_)
 	ioctl(kbdFD, KDSKBMODE, K_XLATE);
 #endif
