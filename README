@@ -1,6 +1,9 @@
      Qt/Embedded FREE EDITION 2.3.10 SOURCE CODE-stable DISTRIBUTION
 
-This is the official release of the Qt/Embedded Free Edition version 2.3.10.
+This is a fork of the official release of the Qt/Embedded Free Edition
+version 2.3.10, with additional patches developed by members of the
+Opie, OpenZaurus and OpenEmbedded communities for enhanced behaviour
+with the Opie handheld environment.
 
 You may use the Qt/Embedded Free Edition for software development free of
 charge only if you develop Free (non-proprietary) Software. The LICENSE.GPL
